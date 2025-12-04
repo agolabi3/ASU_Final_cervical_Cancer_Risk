@@ -1,4 +1,4 @@
-🧬 Cervical Cancer Risk Prediction
+🧬 **Cervical Cancer Risk Prediction**
 CIS 508 – Machine Learning in Business • Final Project
 
 Author: Aryanna Golabi
@@ -6,7 +6,7 @@ App: https://asufinalcervicalcancerrisk-l3xd56p3d3fkwnokbxdtkp.streamlit.app/
 
 Course: CIS 508 — Machine Learning in Business
 
-📌 Project Overview
+📌 **Project Overview**
 
 Cervical cancer is largely preventable through early detection and regular screening. However, many individuals lack access to timely medical follow-up, making risk‐prediction tools valuable in prioritizing screenings.
 
@@ -28,8 +28,8 @@ Deployment using Streamlit
 
 How to run and use the application
 
-🏥 1. Business Problem & Analytical Framing
-Business Problem
+🏥 **1. Business Problem & Analytical Framing
+Business Problem**
 
 Healthcare providers often face high patient volumes and limited resources. A data-driven screening tool can help prioritize individuals at highest risk for cervical cancer to ensure timely follow-up and reduce missed diagnoses.
 
@@ -55,8 +55,8 @@ ML Goal: Predict likelihood of a positive biopsy
 
 Metric priority: Recall, to avoid missed true cancer cases
 
-🧹 2. Data Preparation
-Dataset
+🧹 2. **Data Preparation
+Dataset**
 
 Source: Cervical Cancer Risk Classification Dataset (Kaggle)
 File: risk_factors_cervical_cancer.csv
@@ -95,7 +95,7 @@ STD history + count
 
 Prior diagnoses (Cancer, CIN, HPV)
 
-🤖 3. Model Development & Hyperparameter Tuning
+🤖 **3. Model Development & Hyperparameter Tuning**
 
 All models required by the professor were implemented and tracked using MLflow in Databricks, with at least two hyperparameters tuned for each model:
 
@@ -136,7 +136,7 @@ max_depth=5
 
 This model achieved the highest sensitivity in validation and was therefore selected for deployment.
 
-🚀 4. Deployment (Streamlit App)
+🚀 **4. Deployment (Streamlit App)**
 App Features
 
 Built using Streamlit
@@ -173,8 +173,8 @@ ASU_Final_cervical_Cancer_Risk/
 ├── requirements.txt
 └── README.md                      # This document
 
-🔬 5. Key Insights & Business Value
-Findings
+🔬 **5. Key Insights & Business Value
+Findings**
 
 Behavioral and sexual health history strongly influence risk prediction.
 
@@ -190,12 +190,12 @@ Prioritizing patients with elevated predicted risk could reduce missed cancer di
 
 The model emphasizes Recall, ensuring fewer false negatives in a clinical context.
 
-⚠️ Medical Disclaimer
+⚠️ **Medical Disclaimer**
 
 This tool is not a medical device, diagnosis tool, or substitute for clinical judgment.
 It is intended only for educational purposes as part of an academic project.
 
-🎉 Acknowledgments
+🎉 **Acknowledgments**
 
 This project was completed for CIS 508 – Machine Learning in Business,
 Arizona State University.
