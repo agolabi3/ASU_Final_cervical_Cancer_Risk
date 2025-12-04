@@ -310,36 +310,6 @@ if st.button("Predict Cervical Cancer Biopsy Risk"):
         )
 
 
-# ----------------------------------------------------------
-# 4. Extra context for users / professor
-# ----------------------------------------------------------
-with st.expander("ℹ️ About this model"):
-    st.markdown(
-        """
-**Model type:** Tuned XGBoost classifier
-**Target:** `Biopsy` (0 = negative, 1 = positive)
-**Features used:**
-
-- Age, number of sexual partners, age at first sexual intercourse
-- Number of pregnancies
-- Smoking status, years smoking, packs/year
-- Hormonal contraceptive use + years
-- IUD use + years
-- History of any STDs + number of STDs
-- Previous diagnoses: Cancer, CIN, HPV
-
-**Why XGBoost?**
-
-- It performed strongly in my Databricks MLflow experiments.
-- It supports non-linear interactions between risk factors.
-- It can be tuned to prioritize **Recall (Sensitivity)**, which is critical in a screening context.
-
-**Metric priority:**
-For this project, I prioritized **Recall** over raw accuracy.
-Missing a true cancer case (false negative) is much worse than flagging an extra patient for follow-up (false positive).
-"""
-    )
-
 st.caption(
     "CIS 508 Final Project – Cervical Cancer Risk Prediction · This app is for educational use only."
 )
