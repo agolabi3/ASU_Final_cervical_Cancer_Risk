@@ -58,7 +58,8 @@ def load_and_train_model():
     """
 
     # CSV is in the repo root; this file is inside app/
-    csv_path = os.path.join(os.path.dirname(__file__), "..", "risk_factors_cervical_cancer.csv")
+    csv_path = os.path.join(os.path.dirname(__file__), "risk_factors_cervical_cancer.csv")
+
 
     if not os.path.exists(csv_path):
         raise FileNotFoundError(
