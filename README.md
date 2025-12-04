@@ -1,7 +1,9 @@
 🧬 **Cervical Cancer Risk Prediction**
+
 CIS 508 – Machine Learning in Business • Final Project
 
 Author: Aryanna Golabi
+
 App: https://asufinalcervicalcancerrisk-l3xd56p3d3fkwnokbxdtkp.streamlit.app/
 
 Course: CIS 508 — Machine Learning in Business
@@ -55,7 +57,7 @@ ML Goal: Predict likelihood of a positive biopsy
 
 Metric priority: Recall, to avoid missed true cancer cases
 
-🧹 2. **Data Preparation
+🧹 **2. Data Preparation
 Dataset**
 
 Source: Cervical Cancer Risk Classification Dataset (Kaggle)
