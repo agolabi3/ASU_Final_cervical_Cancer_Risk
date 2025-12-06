@@ -4,200 +4,279 @@ CIS 508 – Machine Learning in Business • Final Project
 
 Author: Aryanna Golabi
 
-App: https://asufinalcervicalcancerrisk-l3xd56p3d3fkwnokbxdtkp.streamlit.app/
+XGBoost App: https://asufinalcervicalcancerrisk-l3xd56p3d3fkwnokbxdtkp.streamlit.app/
+
+Decision Tree App: https://asufinalcervicalcancerrisk-ymgdfdb9e2jmkrzupmef5c.streamlit.app/
 
 Course: CIS 508 — Machine Learning in Business
 
 📌 **Project Overview**
 
-Cervical cancer is largely preventable through early detection and regular screening. However, many individuals lack access to timely medical follow-up, making risk‐prediction tools valuable in prioritizing screenings.
+Cervical cancer is one of the most preventable cancers when detected early. The goal of this project is to build a machine-learning tool that predicts the risk of a positive cervical cancer biopsy using demographic, behavioral, and clinical features.
 
-This project builds a machine learning model that predicts the likelihood of a positive cervical cancer biopsy using behavioral, demographic, and clinical risk factors.
+This project demonstrates the full ML lifecycle:
 
-This README documents:
+Business problem framing
 
-The business problem
+Data cleaning & preprocessing
 
-Analytic framing and ML approach
+Model development with hyperparameter tuning
 
-Data preparation
+MLflow experiment tracking in Databricks
 
-Model development with extensive hyperparameter tuning
+Deployment as interactive Streamlit apps
 
-MLflow experiment tracking
+Two models were ultimately deployed:
 
-Deployment using Streamlit
+XGBoost model – nonlinear, higher-capacity classifier
 
-How to run and use the application
+Decision Tree model – simple, interpretable model that achieved the best evaluation metrics
 
 🏥 **1. Business Problem & Analytical Framing
 Business Problem**
 
-Healthcare providers often face high patient volumes and limited resources. A data-driven screening tool can help prioritize individuals at highest risk for cervical cancer to ensure timely follow-up and reduce missed diagnoses.
+Clinicians often face limited time and resources for screening. A data-driven risk prediction tool can help:
+
+Identify patients who may require more urgent follow-up
+
+Reduce missed diagnoses
+
+Improve screening efficiency
 
 Why It Matters
 
-Cervical cancer outcomes improve dramatically with early detection.
+False negatives in cancer screening are high-stakes. Therefore:
 
-False negatives are dangerous — therefore Recall (Sensitivity) is the priority metric.
+Recall (Sensitivity) was selected as the primary metric.
 
-A risk prediction tool can support clinical decision-making and public health initiatives.
-
-ML Task Framing
-
-This is a supervised binary classification problem:
+The project frames the problem as a binary classification task:
 
 Target variable: Biopsy
 
-1 = positive cervical cancer biopsy
+1 = positive (evidence of cervical cancer)
 
-0 = negative biopsy
+0 = negative
 
-ML Goal: Predict likelihood of a positive biopsy
+ML Approach
 
-Metric priority: Recall, to avoid missed true cancer cases
+Supervised learning
 
-🧹 **2. Data Preparation
-Dataset**
+Models tested: LR, SVM, Decision Tree, Random Forest, KNN, Naive Bayes, Neural Network, XGBoost, Ensemble
 
-Source: Cervical Cancer Risk Classification Dataset (Kaggle)
-File: risk_factors_cervical_cancer.csv
+Full hyperparameter tuning across all models
 
-Key Steps
+Best model selected by Recall, with Precision/Accuracy considered for clinical viability
 
-Handle missing values (?) → replaced using median imputation
+🧹 **2. Data Preparation**
+Dataset
 
-Convert all numeric features
+Source: Kaggle – Cervical Cancer Risk Factors Data Set
 
-Drop rows without biopsy outcomes
+~850 rows
 
-Feature scaling using StandardScaler
+Includes demographics, history, behavioral factors, and clinical diagnoses
 
-Train-test split: 80% train / 20% test with stratification
+Cleaning Steps
 
-Features Used
+Replace ? with NaN
 
-A clinically meaningful set, including:
+Convert numeric columns
 
-Age
+Drop rows missing biopsy outcomes
 
-Number of sexual partners
+Median imputation for all features
 
-Age at first intercourse
+Scaling using StandardScaler
+
+Train/test split: 80% / 20% with stratification
+
+Features Used in Modeling
+
+Age, number of partners, first intercourse age
 
 Number of pregnancies
 
-Smoking history (status, years, packs/year)
+Smoking status, smoking years, packs/year
 
-Hormonal contraceptives (use + years)
+Hormonal contraceptive use + years
 
-IUD use
+IUD use + years
 
-STD history + count
+STDs (presence, number)
 
-Prior diagnoses (Cancer, CIN, HPV)
+Clinical flags: Dx:Cancer, Dx:CIN, Dx:HPV
 
 🤖 **3. Model Development & Hyperparameter Tuning**
 
-All models required by the professor were implemented and tracked using MLflow in Databricks, with at least two hyperparameters tuned for each model:
+All required models for CIS 508 were implemented and tuned:
 
-Models Tested
-Model Family	Hyperparameters Tuned
-Logistic Regression	C, class_weight, penalty
-Support Vector Machine	C, kernel, gamma
-Decision Tree	max_depth, min_samples_split, criterion
-Random Forest	n_estimators, max_depth, max_features
-K-Nearest Neighbors	n_neighbors, weights, p
-Naive Bayes	var_smoothing
-Gradient Boosting / XGBoost	n_estimators, learning_rate, max_depth
-Neural Network (MLP)	hidden_layer_sizes, alpha, activation
-Voting Ensemble	voting, weights, flatten_transform
-Tracking in MLflow
+Models Built
 
-Every run logs:
+Logistic Regression
+
+Support Vector Machine
+
+Decision Tree
+
+Random Forest
+
+K-Nearest Neighbors
+
+Naive Bayes
+
+Neural Network (MLP)
+
+XGBoost
+
+Voting Ensemble (LR + RF + SVM)
+
+Hyperparameter Tuning
+
+Each model had 2–3 hyperparameters, each with multiple tested values:
+
+Example:
+
+Decision Tree: max_depth, min_samples_split, criterion
+
+XGBoost: n_estimators, learning_rate, max_depth
+
+MLP: hidden_layer_sizes, alpha, activation
+
+SVM: C, kernel, gamma
+
+This generated 100+ MLflow experiment runs.
+
+MLflow Tracking (Databricks)
+
+Tracked per run:
 
 Model family
 
 Hyperparameters
 
-Accuracy, Precision, Recall, F1 score
+Accuracy
 
-Serialized model artifact
+Precision
 
-Model Selection
+Recall
 
-The best performing model (by Recall) was:
+F1 score
 
-👉 XGBoost Classifier, tuned with:
+Model artifact
 
-n_estimators=200
+🏆 **4. Best-Performing Model**
+❌ Why Naive Bayes was not selected
 
-learning_rate=0.1
+Although Naive Bayes achieved Recall = 1.0, it had:
 
-max_depth=5
+Precision ≈ 0.06
 
-This model achieved the highest sensitivity in validation and was therefore selected for deployment.
+Accuracy ≈ 0.10
 
-🚀 **4. Deployment (Streamlit App)**
-App Features
+It was predicting everyone as positive.
+Clinically useless → rejected.
 
-Built using Streamlit
+⭐ **True Best Model: Decision Tree (max_depth=3)**
 
-Users input patient history and behavioral risk factors
+Based on the actual MLflow results:
 
-App preprocesses data exactly like the trained model
+Recall: 0.8182
 
-Model provides:
+Precision: 0.75
 
-High/Low risk classification
+Accuracy: ~0.97
 
-Probability of positive biopsy
+F1 Score: ~0.78
 
-Explanatory context & medical disclaimer
+Why the Decision Tree was selected
 
-Run the App Locally
-pip install -r requirements.txt
-streamlit run streamlit_app.py
+Best balance of Recall and Precision
 
-Requirements
-streamlit==1.39.0
-numpy
-pandas
-scikit-learn
-xgboost
+Highest overall Accuracy of all high-recall models
 
-📁 Project File Structure
-ASU_Final_cervical_Cancer_Risk/
+Small, interpretable structure
+
+Clinically reasonable predictions
+
+Based on simple, stable decision rules
+
+This model is the official “best” model for the project based on your experiments.
+
+🚀 **5. Deployment** (Two Streamlit Apps)
+**1. XGBoost App**
+
+Demonstrates deployment of an advanced nonlinear ML model
+
+Retrains XGBoost inside the app
+
+Uses full feature set
+
+Provides probability estimates
+
+Good example of modern applied ML deployment
+
+**2. Decision Tree App (Best Model)**
+
+Implements the true best model
+
+Transparent, interpretable decision structure
+
+Ideal for clinical-style reasoning
+
+Shows probability and classification
+
+More stable to user variation
+
+Better aligned to metric priority (Recall)
+
+Satisfies professor’s emphasis on interpretability
+
+📁 **Project Structure**
+ASU_Cervical_Cancer_Risk/
 │
-├── streamlit_app.py               # Deployed Streamlit web app
-├── asu_cervical_cancer_risk_final.py  # Colab modeling script
-├── risk_factors_cervical_cancer.csv   # Dataset
+├── streamlit_app.py                 # XGBoost app
+├── streamlit_dt_app.py              # Decision Tree app – BEST MODEL
+├── asu_cervical_cancer_risk_final.py (Colab modeling script)
+├── risk_factors_cervical_cancer.csv
 ├── requirements.txt
-└── README.md                      # This document
+└── README.md
 
-🔬 **5. Key Insights & Business Value
-Findings**
+📊 **6. Key Insights**
+Clinical insights
 
-Behavioral and sexual health history strongly influence risk prediction.
+Prior diagnoses (Dx:CIN, Dx:HPV, Dx:Cancer) strongly correlate with positive biopsy
 
-Smoking duration and STD history are particularly predictive.
+STD history + smoking amplify risk but do not dominate the tree
 
-XGBoost outperformed all other models, capturing nonlinear interactions.
+Shallow trees provide clinician-friendly decision logic
 
-Business Impact
+Business value
 
-A screening support tool like this could help medical staff identify high-risk patients earlier.
+Supports early screening workflows
 
-Prioritizing patients with elevated predicted risk could reduce missed cancer diagnoses.
+Prioritizes patients needing urgent follow-up
 
-The model emphasizes Recall, ensuring fewer false negatives in a clinical context.
+Reduces missed diagnoses (Recall-first design)
+
+Deployable as a lightweight web tool
 
 ⚠️ **Medical Disclaimer**
 
-This tool is not a medical device, diagnosis tool, or substitute for clinical judgment.
-It is intended only for educational purposes as part of an academic project.
+This tool is for educational purposes only as part of CIS 508.
+It should not be used for real clinical decision-making.
 
-🎉 **Acknowledgments**
+🎉 **Conclusion**
 
-This project was completed for CIS 508 – Machine Learning in Business,
-Arizona State University.
+This project successfully demonstrates:
+
+Full ML lifecycle
+
+Hyperparameter tuning across many models
+
+Databricks MLflow experiment tracking
+
+Two deployed web apps
+
+Interpretability-focused model selection
+
+Strong business and clinical alignment
