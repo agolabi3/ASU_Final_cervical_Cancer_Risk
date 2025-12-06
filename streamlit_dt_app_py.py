@@ -22,15 +22,34 @@ from sklearn.metrics import recall_score, precision_score, accuracy_score, f1_sc
 # Page config
 # ----------------------------------------------------------
 st.set_page_config(
-    page_title="Cervical Cancer Risk – Decision Tree Model",
-    page_icon="🌳",
+    page_title="Cervical Cancer Risk Prediction",
+    page_icon="🔬",
     layout="centered",
 )
 
 # ----------------------------------------------------------
 # Title & description
 # ----------------------------------------------------------
-st.title("🌳 Cervical Cancer Risk Prediction – Decision Tree")
+st.title("🔬 Cervical Cancer Risk Prediction Tool")
+
+# ----------------------------------------------------------
+# Extra context
+# ----------------------------------------------------------
+with st.expander("ℹ️ About this Decision Tree model"):
+    st.markdown(
+        """
+**Model type:** Shallow Decision Tree (max_depth=3)
+**Why this model?**
+
+- Achieved one of the **highest Recall scores** in MLflow experiments
+- Also maintained **high Precision and Accuracy**, unlike extreme Naive Bayes runs
+- Easy to interpret: decisions can be visualized as a tree structure
+
+**Metric priority:**
+Recall (Sensitivity) is prioritized to reduce the chance of missing true cancer cases,
+while still keeping precision and overall accuracy at acceptable levels.
+"""
+    )
 
 st.write(
     """
@@ -206,7 +225,7 @@ st.subheader("Decision Tree Prediction")
 # ----------------------------------------------------------
 # 3. Prepare features & predict
 # ----------------------------------------------------------
-if st.button("Predict Biopsy Risk (Decision Tree)"):
+if st.button("Predict Biopsy Risk"):
 
     raw_input = np.array(
         [[
@@ -262,24 +281,7 @@ if st.button("Predict Biopsy Risk (Decision Tree)"):
         )
 
 
-# ----------------------------------------------------------
-# 4. Extra context
-# ----------------------------------------------------------
-with st.expander("ℹ️ About this Decision Tree model"):
-    st.markdown(
-        """
-**Model type:** Shallow Decision Tree (max_depth=3)
-**Why this model?**
 
-- Achieved one of the **highest Recall scores** in MLflow experiments
-- Also maintained **high Precision and Accuracy**, unlike extreme Naive Bayes runs
-- Easy to interpret: decisions can be visualized as a tree structure
-
-**Metric priority:**
-Recall (Sensitivity) is prioritized to reduce the chance of missing true cancer cases,
-while still keeping precision and overall accuracy at acceptable levels.
-"""
-    )
 
 st.caption(
     "CIS 508 Final Project – Decision Tree cervical cancer risk model · Educational use only."
